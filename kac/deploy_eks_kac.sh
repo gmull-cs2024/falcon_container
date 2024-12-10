@@ -14,7 +14,7 @@ if [ -z "$ECR_REPO_KAC" ]; then
   exit 1
 fi
 
-# Check if AWS ECR is provided
+# Check if KAC Image Tag Value is provided
 if [ -z "$KAC_IMAGE_TAG_VALUE" ]; then
   echo "Error: KAC_IMAGE_TAG_VALUE environment variable is not set."
   echo "Please set it using: export ECR_RC_IMAGE_TAG_VALUE=<your_kac_image_tag>"
