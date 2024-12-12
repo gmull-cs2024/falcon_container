@@ -14,9 +14,21 @@ export AWS_REGION_VALUE="<aws_region>"                     # Example: us-east-2
 
 ## Deployment
 
+*Deployment*
+
+```bash
+deploy_eks_falconSensor.sh
+```
+
+*Uninstall*
+
+```bash
+deploy_eks_falconSensor.sh uninstall
+```
+
 ### Example Output
 
-Example Output
+Example Deployment Output
 
 ```bash
 ./deploy_eks_falconSensor.sh 
