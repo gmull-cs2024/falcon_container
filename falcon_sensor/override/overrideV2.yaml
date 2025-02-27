@@ -1,0 +1,90 @@
+# Enable the node sensor
+node:
+  enabled: true
+  # Use the BPF backend as it's required for compatibility with Autopilot
+  backend: bpf
+
+  # Enable GKE Autopilot mode
+  gke:
+    autopilot: true
+
+  # Disable privileged mode
+  privileged: false
+
+  # Disable host namespace access
+  hostPID: false
+  hostIPC: false
+  hostNetwork: false
+
+  # Only include capabilities allowed by GKE Autopilot
+  capabilities: 
+    drop: ["ALL"]
+    add: ["AUDIT_WRITE,CHOWN,DAC_OVERRIDE,FOWNER,FSETID,KILL,MKNOD,NET_BIND_SERVICE,NET_RAW,SETFCAP,SETGID,SETPCAP,SETUID,SYS_CHROOT,SYS_PTRACE"]
+
+  # Replace HostPath with emptyDir for volume storage
+  useHostPathVolume: false
+  storage:
+    type: emptyDir
+
+  # DaemonSet-specific configuration
+  daemonset:
+    annotations:
+      "warden.networking.gke.io/skip-webhook": "true"  # Skip webhook for testing purposes
+    updateStrategy: RollingUpdate
+    maxUnavailable: 1
+    tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+
+    # Resource limits and requests for Autopilot compatibility
+    resources:
+      limits:
+        cpu: "1000m"  # Minimum CPU allowed in Autopilot
+        memory: "512Mi"  # Minimum memory allowed in Autopilot
+      requests:
+        cpu: "1000m"
+        memory: "512Mi"
+
+  # Image repository and pull settings
+  image:
+    repository: "us-central1-docker.pkg.dev/cslab-12162024/falcon-sensor/us-1/release/falcon-sensor"
+    tag: "7.20.0-17306-1.falcon-linux.Release.US-1"
+    pullPolicy: Always
+    pullSecrets: null  # No authentication required for public registry; update if needed
+
+  # Pod termination grace period
+  terminationGracePeriod: 30
+
+  # Custom annotations for DaemonSet pods
+  podAnnotations: {}
+
+  # Custom affinity and tolerations for DaemonSet pods
+  nodeAffinity: {}
+
+# Disable the container sensor (webhook-based)
+container:
+  enabled: false
+
+# Falcon-specific configuration
+falcon:
+  # Your CrowdStrike customer ID (required)
+  cid: "3D0203D68AB74763A56BC5AA06F30957-25"
+  # Optional tags for Falcon sensor
+  tags: ""
+
+# ServiceAccount settings
+serviceAccount:
+  name: crowdstrike-falcon-sa
+  annotations: {}
+
+# Override various naming aspects of this chart
+nameOverride: ""
+fullnameOverride: ""
+
+# Disable test suite deployment
+testing:
+  enabled: false

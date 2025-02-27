@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: falcon-kac
+  namespace: falcon-kac
+  labels:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+spec:
+  selector:
+    app: falcon-kac
+  ports:
+    - name: webhook
+      protocol: TCP
+      port: 4443
+      targetPort: 4443
+    - name: watcher
+      protocol: TCP
+      port: 4080
+      targetPort: 4080
+    - name: metrics
+      protocol: TCP
+      port: 8080
+      targetPort: 8080  # Assuming Falcon KAC exposes metrics here
+  type: ClusterIP

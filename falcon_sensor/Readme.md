@@ -71,3 +71,15 @@ Falcon sensor successfully deployed!
 NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
 falcon-sensor   2         2         2       2            2           kubernetes.io/os=linux   6s
 ```
+
+## AKS Deployment
+
+### Set Environment
+
+```bash
+export FALCON_CID = "<FALCON_CID>-<EXTENDED_VAL>"
+export ACR_NAME = "<AZURE_CONTAINER_REGISTRY_NAME>"
+export FALCON_SENSOR_REPO="<FALCON_SENSOR_NAME>"
+export FALCON_SENSOR_TAG_VALUE="<FALCON_SENSOR_TAG_VALUE>"
+
+```
