@@ -46,7 +46,7 @@ metadata:
   name: falcon-node-sensor
 spec:
   falcon:
-    cid: 3D0203D68AB74763A56BC5AA06F30957-25
+    cid: <cid info>
   node:
     image: 715841348376.dkr.ecr.us-east-2.amazonaws.com/falcon-sensor:7.23.0-17607-1.falcon-linux.Release.US-1
     tolerations:
